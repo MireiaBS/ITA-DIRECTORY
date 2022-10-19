@@ -1,0 +1,51 @@
+{
+  "name": "ita-directory",
+  "private": true,
+  "version": "1.0.0",
+  "description": "ITA Directory",
+  "type": "module",
+  "scripts": {
+    "frontend": "cp .env.development ./frontend/.env && cd ./frontend && npm start",
+    "backend": "cp .env.development ./backend/.env && cd ./backend && npm run dev",
+    "e2e": "cp .env.development ./e2e/.env && cd ./e2e && npm run test",
+    "install-deps": "npm install && cd ./frontend && npm install && cd .. && cd ./backend && npm install",
+    "start-db": "cd ./scripts && source ./docker-utils.sh; launchPostgres",
+    "start-redis": "cd ./scripts && source ./docker-utils.sh; launchRedis",
+    "start-server": "cd ./scripts && bash up.sh",
+    "prisma-migrate": "cd ./backend && npx prisma migrate dev",
+    "prisma-seed": "node ./backend/prisma/seed.js",
+    "start-prisma": "npm run prisma-migrate && npm run prisma-seed",
+    "up": "cp .env.development ./backend/.env && npm run start-server && npm run start-prisma && npm run uml",
+    "down": "cd ./scripts && bash down.sh",
+    "postinstall": "husky install",
+    "prepare": "husky install && chmod ug+x .husky/*",
+    "lint": "./node_modules/.bin/eslint --max-warnings=0",
+    "uml": "cd ./backend && npx prisma-uml prisma/schema.prisma > db/schema-db.puml && npx prisma-uml -o png -f db/schema-db.png prisma/schema.prisma"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/it-academyproject/ita-directory-frontend.git"
+  },
+  "keywords": [
+    "react",
+    "node.js",
+    "prisma",
+    "directory",
+    "docusaurus"
+  ],
+  "author": "Kevin Mamaqi Kapllani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/it-academyproject/ita-directory-frontend/issues"
+  },
+  "homepage": "https://github.com/it-academyproject/ita-directory-frontend#readme",
+  "devDependencies": {
+    "@testing-library/dom": "8.18.1",
+    "@testing-library/user-event": "14.4.3",
+    "eslint": "8.17.0",
+    "husky": "6.0.0"
+  },
+  "dependencies": {
+    "@jest/globals": "29.1.0"
+  }
+}
